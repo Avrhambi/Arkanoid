@@ -5,13 +5,16 @@ import sprite.Ball;
 /**
  * The interface HitListener.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -06-07
+ * @author Avraham Bicha
+ * @since 2023-06-07
  *
  */
 public interface HitListener {
-    // This method is called whenever the beingHit object is hit.
-    // The hitter parameter is the Ball that's doing the hitting.
+    /**
+     * Called whenever the {@code beingHit} object is hit.
+     *
+     * @param beingHit the block that was hit
+     * @param hitter   the {@link Ball} that did the hitting
+     */
     void hitEvent(Block beingHit, Ball hitter);
 }

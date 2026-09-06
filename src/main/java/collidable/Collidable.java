@@ -6,9 +6,8 @@ import geometry.Rectangle;
 /**
  * The interface Collidable.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -05-07
+ * @author Avraham Bicha
+ * @since 2023-05-07
  */
 public interface Collidable {
     /**

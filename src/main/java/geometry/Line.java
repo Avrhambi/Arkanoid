@@ -5,9 +5,8 @@ import java.util.List;
 /**
  * The type Line.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -04-23
+ * @author Avraham Bicha
+ * @since 2023-04-23
  */
 public class Line {
     private final Point start;

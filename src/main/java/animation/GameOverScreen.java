@@ -5,9 +5,8 @@ import game.GameFlow;
 /**
  * The type GameOverScreen.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -06-14
+ * @author Avraham Bicha
+ * @since 2023-06-14
  */
 public class GameOverScreen implements Animation {
     private final boolean stop;
