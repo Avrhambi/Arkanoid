@@ -3,6 +3,7 @@ target/
 build/
 out/
 *.class
+dependency-reduced-pom.xml
 
 # IDE
 .idea/
@@ -15,5 +16,5 @@ out/
 .DS_Store
 Thumbs.db
 
-# Local working copy of the biuoop jar (vendored under maven-repo/ instead)
+# Scratch copy of the biuoop jar (canonical copy lives in maven-repo/)
 /lib/
