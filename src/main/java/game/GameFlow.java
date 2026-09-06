@@ -6,6 +6,8 @@ import animation.WInScreen;
 import biuoop.KeyboardSensor;
 import level.LevelInformation;
 import animation.AnimationRunner;
+import listener.Counter;
+import sprite.LivesIndicator;
 import sprite.ScoreIndicator;
 
 import java.util.List;
@@ -18,9 +20,12 @@ import java.util.List;
  */
 public class GameFlow {
 
+    public static final int STARTING_LIVES = 3;
+
     private final AnimationRunner animationRunner;
     private final KeyboardSensor keyboardSensor;
     private final ScoreIndicator scoreIndicator;
+    private final LivesIndicator livesIndicator;
 
     /**
      * Constructor.
@@ -32,6 +37,7 @@ public class GameFlow {
         this.animationRunner = animationRunner1;
         this.keyboardSensor = keyboardSensor1;
         this.scoreIndicator = new ScoreIndicator();
+        this.livesIndicator = new LivesIndicator(new Counter(STARTING_LIVES));
     }
 
     /**
@@ -39,6 +45,13 @@ public class GameFlow {
      */
     public ScoreIndicator getScoreIndicator() {
         return this.scoreIndicator;
+    }
+
+    /**
+     * @return the lives indicator.
+     */
+    public LivesIndicator getLivesIndicator() {
+        return this.livesIndicator;
     }
 
     /**
@@ -53,30 +66,28 @@ public class GameFlow {
 
             // create the level.
             GameLevel level = new GameLevel(levelInfo, this.animationRunner, this.keyboardSensor,
-                    this.scoreIndicator);
+                    this.scoreIndicator, this.livesIndicator);
 
             // initialize the level.
             level.initialize();
 
-            // initialize the number of blocks that need to be removed for winning the game.
-            int num = level.getBlockRemover().getRemainingBlocks().getValue()
-                    - level.getLevelInformation().numberOfBlocksToRemove();
             while (true) {
-                if (level.getBlockRemover().getRemainingBlocks().getValue() == num
-                        || level.getBlockRemover().getRemainingBlocks().getValue() == 0) {
+                TurnResult result = level.run();
+                if (result == TurnResult.LEVEL_CLEARED) {
                     break;
                 }
-                // run the level animation
-                level.run();
-                if (level.getBallRemover().getRemainingBalls().getValue() == 0) {
-                        this.animationRunner.run(new KeyPressStoppableAnimation(this.keyboardSensor,
-                                KeyboardSensor.SPACE_KEY, new GameOverScreen(this)));
-                    /*
-                    if all the balls went out of the screen they need to be initialize again and the paddle should
-                    move to the middle of the screen. This method is tacking care of that.
-                     */
-                    level.initializeBallAndPaddle();
+                // the turn was lost - one life gone.
+                this.livesIndicator.getLives().decrease(1);
+                if (this.livesIndicator.getLives().getValue() <= 0) {
+                    this.animationRunner.run(new KeyPressStoppableAnimation(this.keyboardSensor,
+                            KeyboardSensor.SPACE_KEY, new GameOverScreen(this)));
+                    return;                         // ends the program - no restart
                 }
+                /*
+                if all the balls went out of the screen they need to be initialize again and the paddle should
+                move to the middle of the screen. This method is tacking care of that.
+                 */
+                level.initializeBallAndPaddle();
             }
         }
         this.animationRunner.run(new KeyPressStoppableAnimation(this.keyboardSensor,
