@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Ass6Game.
+ * The type ArkanoidGame.
  *
  * @author avrhamBicha  <@address  example.com/>
  * @version 19.0.2
  * @since 2023 -05-07
  *
  */
-public class Ass6Game {
+public class ArkanoidGame {
 
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 600;
