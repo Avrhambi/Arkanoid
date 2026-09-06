@@ -1,10 +1,5 @@
 package listener;
 
-import biuoop.DrawSurface;
-import game.GameLevel;
-import sprite.Sprite;
-
-
 /**
  * The type Counter.
  *
@@ -12,13 +7,9 @@ import sprite.Sprite;
  * @version 19.0.2
  * @since 2023 -06-14
  */
-public class Counter implements Sprite {
+public class Counter {
 
     private int counter;
-
-    public static final int Y_FOR_LIFE = 15;
-    public static final int X_FOR_LIFE = 100;
-    public static final int FONT_SIZE = 15;
 
     /**
      * Constructor.
@@ -60,22 +51,5 @@ public class Counter implements Sprite {
      */
     public int getValue() {
         return this.counter;
-    }
-
-    @Override
-    public void drawOn(DrawSurface d) {
-    }
-
-    @Override
-    public void timePassed() {
-    }
-
-    /**
-     * add the level indicator to the sprite list.
-     *
-     * @param game is the game.
-     */
-    public void addToGame(GameLevel game) {
-        game.addSprite(this);
     }
 }

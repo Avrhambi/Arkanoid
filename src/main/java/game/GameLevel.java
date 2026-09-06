@@ -12,6 +12,7 @@ import collidable.Collidable;
 import sprite.Sprite;
 import sprite.Ball;
 import sprite.LevelIndicator;
+import sprite.LivesIndicator;
 import sprite.SpriteCollection;
 import sprite.ScoreIndicator;
 import biuoop.DrawSurface;
@@ -41,6 +42,8 @@ public class GameLevel implements Animation {
     private final LevelInformation levelInformation;
     private final KeyboardSensor keyboard;
     private ScoreIndicator scoreIndicator;
+    private final LivesIndicator livesIndicator;
+    private boolean cleared;
     private final BallRemover ballRemover;
     private final BlockRemover blockRemover;
     private final SpriteCollection sprites;
@@ -67,9 +70,10 @@ public class GameLevel implements Animation {
      * @param animationRunner   is the animation runner
      * @param keyboard          is the keyboard.
      * @param scoreIndicator    is the game flow score indicator.
+     * @param livesIndicator    is the game flow lives indicator.
      */
     public GameLevel(LevelInformation levelInformation1, AnimationRunner animationRunner, KeyboardSensor keyboard,
-                     ScoreIndicator scoreIndicator) {
+                     ScoreIndicator scoreIndicator, LivesIndicator livesIndicator) {
         this.levelInformation = levelInformation1;
         this.sprites = new SpriteCollection();
         this.environment = new GameEnvironment();
@@ -81,7 +85,7 @@ public class GameLevel implements Animation {
         this.running = true;
         this.keyboard = keyboard;
         this.scoreIndicator = scoreIndicator;
-//        this.lives = lives;
+        this.livesIndicator = livesIndicator;
         try {
             this.paddle = new Paddle(new Rectangle(new Point((float) (SCREEN_WIDTH / 2)
                     - this.levelInformation.paddleWidth() / (float) 2, SCREEN_HEIGHT - SCREEN_FRAME_SIZE),
@@ -214,6 +218,7 @@ public class GameLevel implements Animation {
 
         // add the score board.
         this.scoreIndicator.addToGame(this);
+        this.livesIndicator.addToGame(this);
 
         LevelIndicator levelIndicator = new LevelIndicator(this.levelInformation);
         levelIndicator.addToGame(this);
@@ -251,13 +256,17 @@ public class GameLevel implements Animation {
     /**
      * The method will run the game.
      * The method will start the animation loop.
+     *
+     * @return the outcome of the turn - LEVEL_CLEARED or TURN_LOST.
      */
-    public void run() {
+    public TurnResult run() {
+        this.cleared = false;
         // countdown before turn starts.
         this.runner.run(new CountdownAnimation(NUMBER_OF_SECONDS, COUNT_FROM, this.getGameSpriteCollection()));
         this.running = true;
         // use our runner to run the current animation -- which is one turn of the game.
         this.runner.run(this);
+        return this.cleared ? TurnResult.LEVEL_CLEARED : TurnResult.TURN_LOST;
     }
 
     /**
@@ -301,6 +310,7 @@ public class GameLevel implements Animation {
                 || this.blockRemover.getRemainingBlocks().getValue() == 0) {
             this.getScoreTrackingListener().getCounterCurrentScore().increase(ADD_IN_WIN);
             this.running = false;
+            this.cleared = true;
         }
 
         // checking the number of balls.

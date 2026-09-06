@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Characterization tests for {@link Counter} as a plain int holder.
- * The Sprite hooks (drawOn/timePassed/addToGame) are intentionally not tested;
- * they are being removed in a later step.
+ * Characterization tests for {@link Counter}, a plain mutable int holder.
  */
 class CounterTest {
 
