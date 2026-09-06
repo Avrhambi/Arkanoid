@@ -11,11 +11,10 @@ import sprite.Sprite;
 import java.awt.Color;
 
 /**
- * * The type Paddle.
- *  *
- *  * @author avrhamBicha  <@address  example.com/>
- *  * @version 19.0.2
- *  * @since 2023 -05-07
+ * The type Paddle.
+ *
+ * @author Avraham Bicha
+ * @since 2023-05-07
  */
 public class Paddle implements Sprite, Collidable {
 
@@ -164,12 +163,8 @@ public class Paddle implements Sprite, Collidable {
      * The method add the paddle to the sprite list and the collidable list.
      *
      * @param g is the game.
-     * @throws Exception in case that the game is null
      */
-    public void addToGame(GameLevel g) throws Exception {
-        if (g == null) {
-            throw new Exception("Game.Game is not initialized, define game first.");
-        }
+    public void addToGame(GameLevel g) {
         g.addSprite(this);
         g.addCollidable(this);
     }

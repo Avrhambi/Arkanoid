@@ -31,11 +31,10 @@ import java.util.List;
 
 
 /**
- * * The type Game.
- * *
- * * @author avrhamBicha  <@address  example.com/>
- * * @version 19.0.2
- * * @since 2023 -05-07
+ * The type Game.
+ *
+ * @author Avraham Bicha
+ * @since 2023-05-07
  */
 public class GameLevel implements Animation {
 
@@ -80,21 +79,16 @@ public class GameLevel implements Animation {
         this.sleeper = new Sleeper();
         this.blockRemover = new BlockRemover(this, new Counter());
         this.ballRemover = new BallRemover(this, new Counter());
-        this.scoreIndicator = new ScoreIndicator();
         this.runner = animationRunner;
         this.running = true;
         this.keyboard = keyboard;
         this.scoreIndicator = scoreIndicator;
         this.livesIndicator = livesIndicator;
-        try {
-            this.paddle = new Paddle(new Rectangle(new Point((float) (SCREEN_WIDTH / 2)
-                    - this.levelInformation.paddleWidth() / (float) 2, SCREEN_HEIGHT - SCREEN_FRAME_SIZE),
-                    this.levelInformation.paddleWidth(), this.levelInformation.paddleHeight()),
-                    Color.yellow, this.keyboard, this);
-            paddle.addToGame(this);
-        } catch (Exception e) {
-            System.out.println("Error");
-        }
+        this.paddle = new Paddle(new Rectangle(new Point((float) (SCREEN_WIDTH / 2)
+                - this.levelInformation.paddleWidth() / (float) 2, SCREEN_HEIGHT - SCREEN_FRAME_SIZE),
+                this.levelInformation.paddleWidth(), this.levelInformation.paddleHeight()),
+                Color.yellow, this.keyboard, this);
+        paddle.addToGame(this);
     }
 
     /**
@@ -183,16 +177,12 @@ public class GameLevel implements Animation {
      * The method will create the balls for the initialize method.
      */
     private void createBalls() {
-        try {
-            for (int i = 0; i < this.levelInformation.numberOfBalls(); i++) {
-                Ball ball1 = new Ball((float) SCREEN_WIDTH / 2, SCREEN_HEIGHT - 3 * SCREEN_FRAME_SIZE,
-                        DEFAULT_RADIUS_SIZE, Color.white, this.environment);
-                ball1.setVelocity(this.levelInformation.initialBallVelocities().get(i));
-                ball1.addToGame(this);
-                ballRemover.getRemainingBalls().increase(NUM_TO_INCREASE);
-            }
-        } catch (Exception e) {
-            System.out.println("Error");
+        for (int i = 0; i < this.levelInformation.numberOfBalls(); i++) {
+            Ball ball1 = new Ball((float) SCREEN_WIDTH / 2, SCREEN_HEIGHT - 3 * SCREEN_FRAME_SIZE,
+                    DEFAULT_RADIUS_SIZE, Color.white, this.environment);
+            ball1.setVelocity(this.levelInformation.initialBallVelocities().get(i));
+            ball1.addToGame(this);
+            ballRemover.getRemainingBalls().increase(NUM_TO_INCREASE);
         }
     }
 
@@ -222,11 +212,7 @@ public class GameLevel implements Animation {
 
         LevelIndicator levelIndicator = new LevelIndicator(this.levelInformation);
         levelIndicator.addToGame(this);
-        try {
-            this.paddle.addToGame(this);
-        } catch (Exception e) {
-            System.out.println("Error");
-        }
+        this.paddle.addToGame(this);
     }
 
     /**
