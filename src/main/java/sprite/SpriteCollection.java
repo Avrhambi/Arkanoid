@@ -7,9 +7,8 @@ import java.util.List;
 /**
  * The type Sprite collection.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -05-07
+ * @author Avraham Bicha
+ * @since 2023-05-07
  *
  */
 public class SpriteCollection {

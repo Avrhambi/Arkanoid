@@ -10,9 +10,8 @@ import java.util.List;
 /**
  * The interface LevelInformation.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -06-07
+ * @author Avraham Bicha
+ * @since 2023-06-07
  *
  */
 public interface LevelInformation {

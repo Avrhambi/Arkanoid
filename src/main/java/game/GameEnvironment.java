@@ -10,11 +10,10 @@ import geometry.Line;
 import collidable.CollisionInfo;
 
 /**
- * * The type GameEnvironment.
- *  *
- *  * @author avrhamBicha  <@address  example.com/>
- *  * @version 19.0.2
- *  * @since 2023 -05-07
+ * The type GameEnvironment.
+ *
+ * @author Avraham Bicha
+ * @since 2023-05-07
  */
 public class GameEnvironment {
 

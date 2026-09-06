@@ -9,9 +9,8 @@ import java.awt.Color;
 /**
  * The type ScoreIndicator.
  * present the score of the game on the screen
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -06-14
+ * @author Avraham Bicha
+ * @since 2023-06-14
  */
 
 public class ScoreIndicator implements Sprite {

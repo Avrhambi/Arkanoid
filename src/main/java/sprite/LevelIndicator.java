@@ -8,9 +8,8 @@ import java.awt.Color;
 /**
  * The type LevelIndicator.
  * present the level of the game on the screen
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -06-14
+ * @author Avraham Bicha
+ * @since 2023-06-14
  */
 public class LevelIndicator implements Sprite {
 

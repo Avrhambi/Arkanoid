@@ -7,9 +7,8 @@ import sprite.Ball;
 /**
  * The type BlockRemover.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -06-14
+ * @author Avraham Bicha
+ * @since 2023-06-14
  */
 public class BlockRemover implements HitListener {
 
@@ -38,7 +37,7 @@ public class BlockRemover implements HitListener {
 
     @Override
     public void hitEvent(Block beingHit, Ball hitter) {
-        beingHit.removeHitListener(beingHit.getHitListeners().get(beingHit.getHitListeners().indexOf(this)));
+        beingHit.removeHitListener(this);
         beingHit.removeFromGame(this.game);
         this.remainingBlocks.decrease(NUM_TO_DECREASE);
         this.game.getScoreTrackingListener().hitEvent(beingHit, hitter);

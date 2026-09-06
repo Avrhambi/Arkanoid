@@ -3,14 +3,22 @@ package listener;
 /**
  * The interface HitNotifier.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -06-07
+ * @author Avraham Bicha
+ * @since 2023-06-07
  *
  */
 public interface HitNotifier {
-    // Add hl as a listener to hit events.
+    /**
+     * Adds a listener to be notified of hit events.
+     *
+     * @param hl the listener to add
+     */
     void addHitListener(HitListener hl);
-    // Remove hl from the list of listeners to hit events.
+
+    /**
+     * Removes a listener so it is no longer notified of hit events.
+     *
+     * @param hl the listener to remove
+     */
     void removeHitListener(HitListener hl);
 }

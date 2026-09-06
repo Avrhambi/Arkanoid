@@ -6,9 +6,8 @@ import game.GameFlow;
 /**
  * The type WInScreen.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -06-14
+ * @author Avraham Bicha
+ * @since 2023-06-14
  */
 public class WInScreen implements Animation {
     private final boolean stop;

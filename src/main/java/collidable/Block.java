@@ -15,11 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * * The type Block.
- *  *
- *  * @author avrhamBicha  <@address  example.com/>
- *  * @version 19.0.2
- *  * @since 2023 -05-07
+ * The type Block.
+ *
+ * @author Avraham Bicha
+ * @since 2023-05-07
  */
 public class Block implements Collidable, Sprite, HitNotifier {
 

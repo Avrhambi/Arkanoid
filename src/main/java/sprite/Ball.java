@@ -15,9 +15,8 @@ import java.awt.Color;
 /**
  * The type Ball.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -04-23
+ * @author Avraham Bicha
+ * @since 2023-04-23
  */
 public class Ball implements Sprite {
 
@@ -78,12 +77,8 @@ public class Ball implements Sprite {
      * The method will add the ball to the sprite list.
      *
      * @param g is the game related.
-     * @throws Exception make sure that null pointer is not use.
      */
-    public void addToGame(GameLevel g) throws Exception {
-        if (g == null) {
-            throw new Exception("Game.Game is not initialized, define game first.");
-        }
+    public void addToGame(GameLevel g) {
         g.addSprite(this);
     }
 

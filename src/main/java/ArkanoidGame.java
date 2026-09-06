@@ -1,6 +1,7 @@
 import animation.AnimationRunner;
 import biuoop.GUI;
 import game.GameFlow;
+import game.GameLevel;
 import level.DirectHit1Level;
 import level.LevelInformation;
 import level.WideEasy2Level;
@@ -12,15 +13,11 @@ import java.util.List;
 /**
  * The type ArkanoidGame.
  *
- * @author avrhamBicha  <@address  example.com/>
- * @version 19.0.2
- * @since 2023 -05-07
+ * @author Avraham Bicha
+ * @since 2023-05-07
  *
  */
 public class ArkanoidGame {
-
-    public static final int SCREEN_WIDTH = 800;
-    public static final int SCREEN_HEIGHT = 600;
 
     /**
      * main method for Arkanoid game.
@@ -28,26 +25,25 @@ public class ArkanoidGame {
      * @param args are the main arguments.
      */
     public static void main(String[] args) {
-        GUI gui = new GUI("Arkanoid game", SCREEN_WIDTH, SCREEN_HEIGHT);
+        GUI gui = new GUI("Arkanoid game", GameLevel.SCREEN_WIDTH, GameLevel.SCREEN_HEIGHT);
         AnimationRunner animationRunner = new AnimationRunner(gui);
         GameFlow game = new GameFlow(animationRunner, gui.getKeyboardSensor());
         List<LevelInformation> levelInformationalList = new ArrayList<>();
 
-        // reading levels from main arguments.
+        // reading levels from main arguments; unrecognised args are skipped.
         for (String arg : args) {
-            switch (arg) {
-                case "1" -> levelInformationalList.add(new DirectHit1Level());
-                case "2" -> levelInformationalList.add(new WideEasy2Level());
-                case "3" -> levelInformationalList.add(new Green3Level());
-                default -> {
-                }
+            if ("1".equals(arg)) {
+                levelInformationalList.add(new DirectHit1Level());
+            } else if ("2".equals(arg)) {
+                levelInformationalList.add(new WideEasy2Level());
+            } else if ("3".equals(arg)) {
+                levelInformationalList.add(new Green3Level());
             }
         }
         if (levelInformationalList.isEmpty()) {
             levelInformationalList.add(new DirectHit1Level());
             levelInformationalList.add(new WideEasy2Level());
             levelInformationalList.add(new Green3Level());
-//            levelInformationalList.add(new FinalFourLevel());
         }
 
         // running the game.
