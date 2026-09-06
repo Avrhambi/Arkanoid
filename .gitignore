@@ -1,0 +1,19 @@
+# Build output
+target/
+build/
+out/
+*.class
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local working copy of the biuoop jar (vendored under maven-repo/ instead)
+/lib/
