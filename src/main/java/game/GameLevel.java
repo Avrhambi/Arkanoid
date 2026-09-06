@@ -220,8 +220,6 @@ public class GameLevel implements Animation {
      * The method take place when the game has to reset after all the ball went out of the screen.
      */
     public void initializeBallAndPaddle() {
-        //sprites.addSprite(this.levelInformation.getBackground());
-
         // creating the balls.
         List<Velocity> velocityList1;
         velocityList1 = this.levelInformation.createVelocity();
