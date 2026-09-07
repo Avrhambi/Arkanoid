@@ -15,7 +15,7 @@ and a real losable end state.
 > video game developed and published by Taito for arcades. The player controls
 > the Vaus, a paddle-shaped craft, deflecting a ball to break brick formations
 > without letting it fall past the bottom edge.
-> — [Wikipedia](https://en.wikipedia.org/wiki/Arkanoid)
+
 
 This clone keeps the core loop (paddle, ball, breakable blocks, per-level
 layouts) and leaves out the power-ups, enemies, and the DOH boss fight.
