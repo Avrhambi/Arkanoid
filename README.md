@@ -225,17 +225,22 @@ screen.
 
 ## CI/CD & quality gate
 
-[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs on every push to
-`main` and every pull request:
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) is configured to run on
+every push to `main` and every pull request:
 
 | Step | What it enforces |
 |---|---|
 | `./mvnw -B -ntp verify` | source compiles at Java 17; all 30 tests pass; checkstyle report generated (non-blocking) |
 | artifact upload | `target/Arkanoid.jar` is produced (`if-no-files-found: error`) |
 
-The runner is a clean `ubuntu-latest` with Temurin 17 and a Maven cache — no
-display, no pre-installed dependencies — so a green run is proof the repo builds
-from nothing.
+The runner is a clean `ubuntu-latest` with Temurin 17 — no display, no
+pre-installed dependencies — so a green run proves the repo builds from nothing.
+
+That exact command has been verified locally from a fresh `git clone` with an
+empty `~/.m2` and the wrapper bootstrapping Maven itself: `BUILD SUCCESS`, 30
+tests, 0 checkstyle violations, `biuoop` resolved from the in-project
+`maven-repo/`. The hosted run is currently blocked by a GitHub account billing
+lock (unrelated to this repo); it will execute once that is cleared.
 
 ---
 
