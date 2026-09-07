@@ -3,9 +3,9 @@
 A desktop clone of the arcade game Arkanoid — a ball, a paddle, five levels of
 breakable blocks — built in Java on the `biuoop` teaching GUI toolkit. Its
 defining engineering property is a **trajectory-based collision model**: each
-frame the ball computes the line it is about to travel and asks a collision
-broker for the nearest intersection, so it never tunnels through a block at
-speed and never resolves a false overlap.
+frame the ball is tested against every collidable along the line it is about to
+travel, not only where it lands, so a fast ball resolves against the first block
+in its path instead of passing through it between frames.
 
 Originally a Bar-Ilan OOP assignment; hardened into a portfolio project with a
 Maven build, CI, a characterization-test safety net around the legacy physics,
@@ -107,7 +107,7 @@ collide with are also **`Collidable`** (`getCollisionRectangle` + `hit`).
 
 | Layer | Technology | Rationale & trade-offs |
 |---|---|---|
-| Language | Java 17 (current LTS) | Pinned via `maven.compiler.release=17` so the bytecode target can't drift from the source level. The original code shipped an arrow-`switch` (Java 14+) while the README claimed "Java SE 10" — that mismatch is what the pin removes. |
+| Language | Java 17 (LTS) | Pinned via `maven.compiler.release=17` so the bytecode target can't drift from the source level. The original code shipped an arrow-`switch` (Java 14+) while the README claimed "Java SE 10" — that mismatch is what the pin removes. |
 | GUI | `biuoop` 1.4 | Course-supplied toolkit — window, draw surface, keyboard sensor, frame sleeper. Not on Maven Central and no license to redistribute broadly, so it is **vendored** (see below). Trade-off: no modern rendering, but the assignment's whole point was to build the game loop by hand. |
 | Build | Maven + `maven-shade-plugin` | One `mvn package` produces a runnable fat jar with `biuoop` bundled — `java -jar` with no classpath setup. Shade over the assembly plugin for the cleaner manifest transformer. |
 | Dependency hosting | In-project file repository (`maven-repo/`) | `biuoop` is committed as a proper Maven artifact under `maven-repo/ac/biu/oop/…` with a hand-written 5-element POM. The POM embedded in the upstream jar names an unresolvable `ac.biu.oop:root` parent and cannot be used. Alternative (`system` scope + a checked-in path) breaks the shade plugin — it won't bundle a system-scoped jar. |
@@ -127,13 +127,13 @@ collide with are also **`Collidable`** (`getCollisionRectangle` + `hit`).
   `collidable`, …) but there is no `com.example` namespace. Kept as-is: it
   matches the assignment and the package split already gives the boundaries.
 - **The geometry core is fenced.** `Ball.moveOneStep` (four-way velocity-sign
-  branching, epsilon fudging, an escape-the-block `while` loop) and
-  `Line`'s intersection math are load-bearing, epsilon-sensitive, and were
-  shipped without tests. They are **not refactored** — instead, Step 4 added
-  characterization tests that pin their current behaviour, including two known
-  quirks (a collinear-overlap intersection returns `null`;
-  `Rectangle.isPointInList` has an inverted name). Refactor only behind those
-  tests.
+  branching, epsilon fudging, an escape-the-block `while` loop) is load-bearing,
+  epsilon-sensitive, and was shipped without tests. It is **not refactored** —
+  instead, the 30 characterization tests pin the primitives it is built from
+  (`Point`, `Line` intersection math, `Rectangle`, `Velocity`), including two
+  known quirks (`Line`'s collinear-overlap intersection returns `null`;
+  `Rectangle.isPointInList` has an inverted name). `moveOneStep` itself has no
+  direct test yet — writing one is the prerequisite for touching it.
 - **`geometry/` uses an upward-Y convention.** A rectangle's lower edge is
   `upperLeft.y - height`. Consistent everywhere; `Block.drawOn` maps it back to
   screen space. Not a bug — do not "fix" it.
@@ -154,8 +154,9 @@ collide with are also **`Collidable`** (`getCollisionRectangle` + `hit`).
 - **Real end state.** `GameLevel.run()` returns a `TurnResult` enum computed
   from a `cleared` flag reset at the top of each turn. `GameFlow` owns a shared
   lives `Counter` (start 3): `TURN_LOST` decrements it; at zero it shows Game
-  Over and returns, so `main` reaches `gui.close()` and the process ends. No
-  `while (true)`.
+  Over and `return`s, so `main` reaches `gui.close()` and the process ends. The
+  original code re-initialised the level on ball-loss with no exit at all — the
+  turn-retry loop now always terminates, on `LEVEL_CLEARED` or at zero lives.
 - **Characterization tests as a safety net.** The 30 tests exist to make the
   fenced geometry *safe to change later*, not to prove it correct now.
 - **CI proves the build is self-contained.** The Actions run builds from a cold
@@ -180,7 +181,7 @@ Arkanoid/
 │   │                            BallRemover, ScoreTrackingListener, Counter
 │   ├── animation/               Animation interface + AnimationRunner (60 fps driver),
 │   │                            countdown / pause / end screens, background decorators
-│   └── geometry/                Point, Line, Rectangle — pure math, fully unit-tested
+│   └── geometry/                Point, Line, Rectangle — pure math, covered by characterization tests
 ├── src/test/java/               JUnit 5 characterization tests (geometry, velocity, counter)
 ├── maven-repo/                  in-project Maven repository — vendored biuoop-1.4
 ├── config/checkstyle/           vendored course checkstyle ruleset
