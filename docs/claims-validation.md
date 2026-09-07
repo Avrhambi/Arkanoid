@@ -12,7 +12,7 @@ Legend: ✅ true / accurate · ❌ false or broken · ⚠️ incomplete, stale, 
 
 | # | Claim (source) | Before | After | Evidence / notes |
 |---|---|---|---|---|
-| 1 | "implementation of the classic Arkanoid game" (README) | ⚠️ | ✅ | `mvn verify` builds from a clean clone; `java -jar target/Arkanoid.jar` plays five levels. Verified by playthrough (screenshots in `docs/img/`). |
+| 1 | "implementation of the classic Arkanoid game" (README) | ⚠️ | ✅ | `mvn verify` builds from a clean clone; `java -jar target/Arkanoid.jar <n>` runs each of the five levels (screenshots in `docs/img/`). Single-level clear → You Win, three lost turns → Game Over → process exits, all confirmed by playthrough. A full 1→5 sequential run is not separately evidenced. |
 | 2 | "Multiple Levels ... selected by command-line arguments or defaults" (README) | ✅ | ✅ | `ArkanoidGame.java` parses `1`–`5` (unknown args skipped); an empty selection defaults to all five levels in order. |
 | 3 | "Smooth Animations ... 60 frames per second" (README) | ✅ | ✅ | `AnimationRunner.FRAMES_PER_SECOND = 60`, frame-time sleep in `run()`. |
 | 4 | "game flow is managed by a dedicated GameFlow class" (README) | ✅ | ✅ | `game/GameFlow.java` — owns the score + lives counters and the level sequence. |
@@ -39,6 +39,11 @@ java -jar target/Arkanoid.jar 4 2  # runs only those levels, in that order
 #  clear all levels -> You Win screen with final score
 ```
 
-Plus: the GitHub Actions run on the merge commit is green, and `README.md`
-contains no reference to `Ass6Game`, "Java 8", "Java SE 10", or the
-`Arkanoid_Game` URL.
+Plus: `README.md` contains no reference to `Ass6Game`, "Java 8", "Java SE 10",
+or the `Arkanoid_Game` URL.
+
+**Open — needs the repo owner:** `main` is merged locally but not pushed
+(`origin/main` is still the pre-work commit). Push `main`, then confirm the
+GitHub Actions run on the head commit is green — that is the last acceptance
+item. Until then the CI rows above are verified by config and a local
+cold-clone build only.
