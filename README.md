@@ -250,10 +250,10 @@ lock (unrelated to this repo); it will execute once that is cleared.
 |---|---|---|
 | ![Level 1 — Direct Hit](docs/img/level1.png) | ![Level 2 — Wide Easy](docs/img/level2.png) | ![Level 3 — Green 3](docs/img/level3.png) |
 | **Direct Hit** | **Wide Easy** | **Green 3** |
-| ![Level 4 — Final Four](docs/img/level4.png) | ![Level 5 — Pyramid](docs/img/level5.png) | ![Countdown](docs/img/countdown.png) |
-| **Final Four** | **Pyramid** | **Countdown** |
-| ![Game Over](docs/img/game-over.png) | ![You Win](docs/img/you-win.png) | |
-| **Game Over** (0 lives) | **You Win** | |
+| ![Level 4 — Final Four](docs/img/level4.png) | ![Level 5 — Pyramid](docs/img/level5.png) | ![Game Over](docs/img/game-over.png) |
+| **Final Four** | **Pyramid** | **Game Over** |
+| ![You Win](docs/img/you-win.png) | |
+|  **You Win** |
 
 ---
 
