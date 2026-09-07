@@ -47,13 +47,6 @@ public class GameFlow {
     }
 
     /**
-     * @return the lives indicator.
-     */
-    public LivesIndicator getLivesIndicator() {
-        return this.livesIndicator;
-    }
-
-    /**
      * The method will receive the list with the levels and run them.
      *
      * @param levels is the list of levels.

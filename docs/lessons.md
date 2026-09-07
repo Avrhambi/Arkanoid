@@ -23,10 +23,12 @@ and continue".
   set in the blocks-cleared branch of `doOneFrame`.
 - `GameFlow` owns a shared lives `Counter` (start 3), threaded by reference into
   every `GameLevel` exactly like the existing score indicator.
-- `runLevels` drops `while (true)` + `num`: `TURN_LOST` → `lives.decrease(1)`;
-  at `<= 0` → `GameOverScreen` then `return`, so `main` reaches `gui.close()`
-  and the process ends. `LEVEL_CLEARED` → next level. `WInScreen` only after the
-  last level.
+- `runLevels` replaces the unbounded loop + `num` sentinel with a turn-retry
+  loop that always exits: `LEVEL_CLEARED` → `break` to the next level;
+  `TURN_LOST` → `lives.decrease(1)`, and at `<= 0` → `GameOverScreen` then
+  `return`, so `main` reaches `gui.close()` and the process ends. `WInScreen`
+  only after the last level. (The loop is still written `while (true)` with
+  explicit `break`/`return` — the point is that every path out is now reachable.)
 
 **Gotcha.** There are two separate "ball" counters. `ballRemover`'s
 `remainingBalls` is **per-turn** — `createBalls()` re-increments it every serve,
@@ -41,3 +43,22 @@ in the HUD across turns and levels.
 **No automated coverage.** `GameFlow` / `GameLevel` need a live GUI, so the
 loss→Game Over path is verified by hand-trace + `mvn verify` + manual
 playthrough only. If that loop is touched again, re-run the 3-loss playthrough.
+
+---
+
+## Known latent issues (pre-existing, deliberately not fixed)
+
+- **The paddle is registered twice.** `GameLevel` calls `paddle.addToGame(this)`
+  in the constructor *and* in `initialize()`, with no dedup — so `Paddle`
+  advances `2 × paddleSpeed()` per frame and is drawn twice. Present since the
+  original assignment; every level's `paddleSpeed()` was tuned with the doubling
+  in effect. Do **not** remove one call in isolation — it halves paddle speed on
+  all five levels. Fix means dropping the constructor call *and* re-tuning every
+  `paddleSpeed()`.
+- **`initializeBallAndPaddle()` re-adds the score / level HUD sprites each lost
+  turn.** Bounded (≤ 3 duplicates before Game Over), draws identical text at the
+  same spot, no state impact. `livesIndicator` correctly avoids this — added
+  once in `initialize()`.
+- **Double frame-pacing.** Both `GameLevel.doOneFrame` and `AnimationRunner.run`
+  sleep to a ~16 ms budget around the same call; the outer sleep is effectively
+  dead.
