@@ -7,7 +7,7 @@ frame the ball is tested against every collidable along the line it is about to
 travel, not only where it lands, so a fast ball resolves against the first block
 in its path instead of passing through it between frames.
 
-Originally a Bar-Ilan OOP assignment; hardened into a portfolio project with a
+Originally a OOP assignment, part of CS degree at Bar Ilan university; hardened into a portfolio project with a
 Maven build, CI, a characterization-test safety net around the legacy physics,
 and a real losable end state.
 
