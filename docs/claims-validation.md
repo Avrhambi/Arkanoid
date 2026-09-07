@@ -17,8 +17,8 @@ Legend: ✅ true / accurate · ❌ false or broken · ⚠️ incomplete, stale, 
 | 3 | "Smooth Animations ... 60 frames per second" (README) | ✅ | ✅ | `AnimationRunner.FRAMES_PER_SECOND = 60`, frame-time sleep in `run()`. |
 | 4 | "game flow is managed by a dedicated GameFlow class" (README) | ✅ | ✅ | `game/GameFlow.java` — owns the score + lives counters and the level sequence. |
 | 5 | "detects and reacts to keyboard input ... control the paddle" — README says "arrow keys" (README) | ⚠️ | ✅ | `Paddle` uses `LEFT_KEY`/`RIGHT_KEY`; `p` (pause) and `space` (resume/dismiss) are now documented in the README Controls line. |
-| 6 | "Java SE 10 or higher" / "Java 8 or later" (README) | ❌ | ✅ | README states **JDK 17+**; `pom.xml` pins `maven.compiler.release=17`; CI builds on Temurin 17. |
-| 7 | Download link → `github.com/Avrhambi/Arkanoid_Game/raw/.../Arkanoid.jar` (README) | ❌ | ✅ | Broken link removed. README quickstart is `git clone` + `./mvnw package`; CI uploads the jar as a build artifact. |
+| 6 | "Java SE 10 or higher" / "Java 8 or later" (README) | ❌ | ✅ | README states **JDK 17+**; `pom.xml` pins `maven.compiler.release=17`; CI configured for Temurin 17. Verified: fresh-clone `./mvnw verify` compiles at `release 17`. |
+| 7 | Download link → `github.com/Avrhambi/Arkanoid_Game/raw/.../Arkanoid.jar` (README) | ❌ | ✅ | Broken link removed. README quickstart is `git clone` + `./mvnw package`; CI configured to upload the jar as a build artifact (pending the billing unlock — see CI status below). |
 | 8 | "Compile and run the Java classes" — no build instructions (README) | ❌ | ✅ | Maven build; `biuoop` vendored under `maven-repo/`; class renamed `Ass6Game` → `ArkanoidGame`. `./mvnw verify` green from an empty local repo. |
 | 9 | `java Ass6Game 1 2 3` (README) | ⚠️ | ✅ | README now `java -jar target/Arkanoid.jar 1 2 3`; manifest `Main-Class: ArkanoidGame`. |
 | 10 | "Project Structure" section lists `Ass6Game.java`, describes `BuildingAnimation` as an animation (README) | ⚠️ | ✅ | Rewritten as "Project layout" — every package with a one-line role; `*Animation` classes described as background decorators / screens. |
@@ -42,8 +42,15 @@ java -jar target/Arkanoid.jar 4 2  # runs only those levels, in that order
 Plus: `README.md` contains no reference to `Ass6Game`, "Java 8", "Java SE 10",
 or the `Arkanoid_Game` URL.
 
-**Open — needs the repo owner:** `main` is merged locally but not pushed
-(`origin/main` is still the pre-work commit). Push `main`, then confirm the
-GitHub Actions run on the head commit is green — that is the last acceptance
-item. Until then the CI rows above are verified by config and a local
-cold-clone build only.
+**CI status.** `main` is pushed (`origin/main` = `69c87aa`). The push triggered
+the CI workflow, but the run did not start: *"The job was not started because
+your account is locked due to a billing issue"* — an account-level GitHub lock,
+not a repo or workflow problem (the repo is public; Actions is enabled;
+`allowed_actions: all`).
+
+The `./mvnw -B -ntp verify` command itself is verified green from a fresh clone
+with an empty `~/.m2` (wrapper downloads Maven 3.9.9, SHA-256 checked; all
+plugins and `biuoop` resolve cold; 30 tests pass; 0 checkstyle violations).
+Once the billing lock is cleared, re-run the workflow (`gh run rerun` or an
+empty commit) to get the green badge — that is the only remaining acceptance
+item and it is outside the codebase.
