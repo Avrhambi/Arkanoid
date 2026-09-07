@@ -6,6 +6,7 @@ import level.DirectHit1Level;
 import level.LevelInformation;
 import level.WideEasy2Level;
 import level.Green3Level;
+import level.FinalFour4Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +39,15 @@ public class ArkanoidGame {
                 levelInformationalList.add(new WideEasy2Level());
             } else if ("3".equals(arg)) {
                 levelInformationalList.add(new Green3Level());
+            } else if ("4".equals(arg)) {
+                levelInformationalList.add(new FinalFour4Level());
             }
         }
         if (levelInformationalList.isEmpty()) {
             levelInformationalList.add(new DirectHit1Level());
             levelInformationalList.add(new WideEasy2Level());
             levelInformationalList.add(new Green3Level());
+            levelInformationalList.add(new FinalFour4Level());
         }
 
         // running the game.
