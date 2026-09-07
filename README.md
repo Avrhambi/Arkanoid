@@ -252,7 +252,7 @@ lock (unrelated to this repo); it will execute once that is cleared.
 | **Direct Hit** | **Wide Easy** | **Green 3** |
 | ![Level 4 — Final Four](docs/img/level4.png) | ![Level 5 — Pyramid](docs/img/level5.png) | ![Game Over](docs/img/game-over.png) |
 | **Final Four** | **Pyramid** | **Game Over** |
-| ![You Win](docs/img/you-win.png) | |
+| ![You Win](docs/img/you-win.png) |
 |  **You Win** |
 
 ---
