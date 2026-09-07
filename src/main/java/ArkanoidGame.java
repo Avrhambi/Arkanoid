@@ -7,6 +7,7 @@ import level.LevelInformation;
 import level.WideEasy2Level;
 import level.Green3Level;
 import level.FinalFour4Level;
+import level.Pyramid5Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,8 @@ public class ArkanoidGame {
                 levelInformationalList.add(new Green3Level());
             } else if ("4".equals(arg)) {
                 levelInformationalList.add(new FinalFour4Level());
+            } else if ("5".equals(arg)) {
+                levelInformationalList.add(new Pyramid5Level());
             }
         }
         if (levelInformationalList.isEmpty()) {
@@ -48,6 +51,7 @@ public class ArkanoidGame {
             levelInformationalList.add(new WideEasy2Level());
             levelInformationalList.add(new Green3Level());
             levelInformationalList.add(new FinalFour4Level());
+            levelInformationalList.add(new Pyramid5Level());
         }
 
         // running the game.
