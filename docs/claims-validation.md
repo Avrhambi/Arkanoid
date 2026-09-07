@@ -13,7 +13,7 @@ Legend: ✅ true / accurate · ❌ false or broken · ⚠️ incomplete, stale, 
 | # | Claim (source) | Before | After | Evidence / notes |
 |---|---|---|---|---|
 | 1 | "implementation of the classic Arkanoid game" (README) | ⚠️ | _pending_ | Game logic is complete, but the project does not build unmodified (see #8). |
-| 2 | "Multiple Levels ... selected by command-line arguments or defaults" (README) | ✅ | _pending_ | `ArkanoidGame.java` parses `1/2/3`, defaults to all three. Grows to 5 levels. |
+| 2 | "Multiple Levels ... selected by command-line arguments or defaults" (README) | ✅ | _pending_ | `ArkanoidGame.java` parses `1`–`5` (unknown args skipped); an empty selection defaults to all five levels in order. |
 | 3 | "Smooth Animations ... 60 frames per second" (README) | ✅ | _pending_ | `AnimationRunner.FRAMES_PER_SECOND = 60`, frame-time sleep in the loop. |
 | 4 | "game flow is managed by a dedicated GameFlow class" (README) | ✅ | _pending_ | `game/GameFlow.java`. |
 | 5 | "detects and reacts to keyboard input ... control the paddle" — README says "arrow keys" (README) | ⚠️ | _pending_ | `Paddle` uses `LEFT_KEY`/`RIGHT_KEY` ✅, but `p` (pause) / `space` are undocumented. |
